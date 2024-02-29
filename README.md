@@ -7,6 +7,4 @@
 
 ## Todo
 - Add mouse emulation layer
-- Add numword
 
-![20230708_142433~3](https://github.com/snicklepickles/zmk-config/assets/95944530/c672fa21-72d3-48e2-bc9e-026236ef4fc6)
