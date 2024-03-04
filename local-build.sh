@@ -5,7 +5,7 @@ zmk_config="/home/nikoli/personal/keyboard/zmk-firmware/miryoku-zmk-swoop/config
 board="nice_nano_v2"
 
 build_zmk () {
-	west build --build-dir "${build_base}/$1" -p -b "$board" -- -DZMK_CONFIG="$zmk_config" -DSHIELD="$1"
+	west build --build-dir "${build_base}/$1" -b "$board" -- -DZMK_CONFIG="$zmk_config" -DSHIELD="$1"
 	cp -v "${build_base}/$1/zephyr/zmk.uf2" "${build_base}/artifacts/$1.uf2"
 }
 
