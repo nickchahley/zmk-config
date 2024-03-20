@@ -14,6 +14,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/* Modifying this work with MacOS local "french numeric"
+ */
+
 #pragma once
 
 #include <dt-bindings/zmk/hid_usage.h>
@@ -142,7 +145,8 @@
  * └────┴────┴────┴────────────────────────┴────┴────┴────┴────┘
  */
 // Row 1
-#define FR_TILDE RA(FR_EACU) // ~ (dead)
+// #define FR_TILDE RA(FR_EACU) // ~ (dead)
+#define FR_TILDE RA(FR_N) // ~ (dead) (interpret from AA kbd)
 #define FR_HASH RA(FR_DQUO) // #
 #define FR_LBRC RA(FR_SQT)  // {
 #define FR_LBKT RA(FR_LPAR) // [

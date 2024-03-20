@@ -43,10 +43,10 @@
             bindings = <&kp LBRC>, <&kp LBKT>;
             mods = <(MOD_LSFT|MOD_RSFT)>;
         };
-        /omit-if-no-ref/ us_semi: unshift_semi {
+        /omit-if-no-ref/ us_colon: unshift_colon {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&kp SEMI>, <&kp COLON>;
+            bindings = <&kp COLON>, <&kp SEMI>;
             mods = <(MOD_LSFT|MOD_RSFT)>;
         };
         /omit-if-no-ref/ us_dllr: unshift_dllr {
@@ -103,5 +103,11 @@
             bindings = <&kp UNDER>, <&kp MINUS>;
             mods = <(MOD_LSFT|MOD_RSFT)>;
         };
+		/omit-if-no-ref/ dot_lpar: dot_lpar {
+			compatible = "zmk,behavior-mod-morph";
+			#binding-cells = <0>;
+			bindings = <&kp LPAR>, <&kp DOT>;
+			mods = <(MOD_LSFT|MOD_RSFT)>;
+		};
     };
 };
