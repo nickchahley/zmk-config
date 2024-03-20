@@ -1,12 +1,20 @@
 # zmk-config
 My personal [ZMK firmware](https://github.com/zmkfirmware/zmk/) config for the [Swoop MX](https://github.com/jimmerricks/swoop) using a noname nice!nano v2 (nRF52840 MCU). Layout is based on [Miryoku](https://github.com/manna-harbour/miryoku_zmk), which is likely the best place to start, but for some reason I've had trouble . Thanks to [snicklepickles](https://github.com/snicklepickles/zmk-config) (who's repo I originally forked), and everyone else in the community who I've taken snippets and inspiration from. Hopefully you find some ideas here.
 
+Currently this is local build only, as I have not worked out how to get github actions builds to work with the ZMK mousekeys PR (2027/head:mousekeyspr)
+
 
 ## features
 - [Miryoku](https://github.com/manna-harbour/miryoku) keyboard layout
-- broken actions build
 - Mouse emulation (local build only)
 - [urob's timeless homerow mods](https://github.com/urob/zmk-config#timeless-homerow-mods) (`config/includes`)
+- French locale compatible layers (WIP)
+
+## antifeatures
+- broken mouse scrolling
+- broken actions build
+- unused layers floating around in keymap
+
 
 ## local builds 
 Building locally is much faster for testing and debugging. Paths in `local-build.sh` are hardcoded.
