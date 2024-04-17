@@ -1,6 +1,31 @@
+// I don't think either of these ctrl bspc/del mod morphs are working
+ZMK_BEHAVIOR(mm_ctr_bspc, mod_morph,
+	bindings = <&kp LC(BSPC)>, <&kp BSPC>;
+	mods = <(MOD_LCTL|MOD_RCTL)>;
+)
+ZMK_BEHAVIOR(mm_ctr_del, mod_morph,
+	bindings = <&kp LC(DEL)>, <&kp DEL>;
+	mods = <(MOD_LCTL|MOD_RCTL)>;
+)
+
+// Need to provide hold tap with a dummy binding cell when defining keymap
+// ex. &lt_bspc NUM 0
+// https://www.reddit.com/r/zmk/comments/12ujlmb/combing_modmorph_and_layer_tap/
+ZMK_BEHAVIOR(lt_bspc, hold_tap,
+	tapping-term-ms = <200>;
+	quick-tap-ms = <175>;
+	bindings = <&mo>, <&mm_ctr_bspc>; 
+)
+ZMK_BEHAVIOR(lt_del, hold_tap,
+	tapping-term-ms = <200>;
+	quick-tap-ms = <175>;
+	bindings = <&mo>, <&mm_ctr_del>; 
+)
+
+
+// Unshift -- most of these are to be able to use shift-SYM to get NUM
 / {
     behaviors {
-        // Unshift -- most of these are to be able to run 
         /omit-if-no-ref/ us_plus: unshift_plus {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
@@ -22,13 +47,13 @@
         /omit-if-no-ref/ us_lpar: unshift_lpar {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&kp LPAR>, <&kp N6>;
+            bindings = <&kp LPAR>, <&kp DOT>;
             mods = <(MOD_LSFT|MOD_RSFT)>;
         };
         /omit-if-no-ref/ us_rpar: unshift_rpar {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&kp RPAR>, <&kp N6>;
+            bindings = <&kp RPAR>, <&kp N0>;
             mods = <(MOD_LSFT|MOD_RSFT)>;
         };
         /omit-if-no-ref/ us_rbrc: unshift_rbrc {
@@ -106,7 +131,7 @@
 		/omit-if-no-ref/ dot_lpar: dot_lpar {
 			compatible = "zmk,behavior-mod-morph";
 			#binding-cells = <0>;
-			bindings = <&kp LPAR>, <&kp DOT>;
+			bindings = <&kp DOT>, <&kp LPAR>;
 			mods = <(MOD_LSFT|MOD_RSFT)>;
 		};
     };

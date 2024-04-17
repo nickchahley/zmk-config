@@ -1,7 +1,7 @@
 #!/bin/bash
 zmk_app="/home/nikoli/personal/keyboard/zmk-firmware/zmk/app"
-build_base="/home/nikoli/personal/keyboard/zmk-firmware/miryoku-zmk-swoop/build/swoop"
-zmk_config="/home/nikoli/personal/keyboard/zmk-firmware/miryoku-zmk-swoop/config"
+build_base="/home/nikoli/personal/keyboard/zmk-firmware/zmk-config/build/swoop"
+zmk_config="/home/nikoli/personal/keyboard/zmk-firmware/zmk-config/config"
 board="nice_nano_v2"
 
 p_flag=''
@@ -21,7 +21,7 @@ done
 
 build_zmk () {
 	if [ "$p_flag" = true ]; then
-		# pristine build
+		echo "Pristine Build"
 		west build --build-dir "${build_base}/$1" -p -b "$board" -- -DZMK_CONFIG="$zmk_config" -DSHIELD="$1" \
 			&& cp -v "${build_base}/$1/zephyr/zmk.uf2" "${build_base}/artifacts/$1.uf2"
 	else
