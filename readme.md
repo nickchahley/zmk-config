@@ -23,7 +23,7 @@ Requirements:
 - initialize submodule: zmk-nodefree-config (`git submodule init`)
 - [zmk toolchain](https://zmk.dev/docs/development/setup)
 - install zephyr-sdk (likely to `~/.local/zephyr-sdk`)
-- checkout zmk src to mousekeys PR
+- checkout zmk src with mousekeys PR
 
 Use venv (ex. conda) of your choice to isolate west (I use the same one for qmk and west).
 ```bash
@@ -48,15 +48,10 @@ cd zephyr-sdk-0.16.3
 # back to wherever zmk repos are
 cd "$ZMK_HEAD"
 
-# setup zmk src
-git clone https://github.com/zmkfirmware/zmk.git && cd zmk
+# setup zmk src, urob's fork contains PRs we use, like mouse
+git clone git@github.com:urob/zmk.git && cd zmk 
 west init -l app/
-west update
-west zephyr-export
+west update && west zephyr-export
 pip3 install --user -r zephyr/scripts/requirements.txt
-
-# checkout mouskeys PR (assuming zmk src repo is one above)
-git fetch origin pull/2027/head:mousekeyspr
-git switch mousekeyspr
 ```
 
