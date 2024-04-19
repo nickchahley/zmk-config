@@ -15,10 +15,10 @@
 
 // make homerow combos tap-only (so HRMs can be chorded instantaneously)
 // #define HRC_ESC &hm_r LA(LCTL) ESC
-#define HRC_TAB  &hm_l         LC(LALT) TAB
-#define HRC_RPAR &hm_r LS(LALT) LPAR
-#define HRC_LPAR &hm_r LC(LALT) RPAR
-#define HRC_COLON &hm_r LG(LALT) COLON
+#define HRC_TAB   &hml LC(LALT) TAB
+#define HRC_RPAR  &hmr LS(LALT) LPAR
+#define HRC_LPAR  &hmr LC(LALT) RPAR
+#define HRC_COLON &hmr LG(LALT) COLON
 
 // Right hand horizontal
 ZMK_COMBO(colon,     &kp COLON, RT2 RT3, DEF NAV NUM, COMBO_TERM_FAST)

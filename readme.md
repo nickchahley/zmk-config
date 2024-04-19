@@ -1,23 +1,13 @@
 # zmk-config
-My personal [ZMK firmware](https://github.com/zmkfirmware/zmk/) config for the [Swoop MX](https://github.com/jimmerricks/swoop) using a noname nice!nano v2 (nRF52840 MCU). Layout is based on [Miryoku](https://github.com/manna-harbour/miryoku_zmk), which is likely the best place to start, but for some reason I've had trouble . Thanks to [snicklepickles](https://github.com/snicklepickles/zmk-config) (who's repo I originally forked), and everyone else in the community who I've taken snippets and inspiration from. Hopefully you find some ideas here.
+My personal [ZMK firmware](https://github.com/zmkfirmware/zmk/) config for the [Swoop MX](https://github.com/jimmerricks/swoop) using a noname nice!nano v2 (nRF52840 MCU). Layout is based on [urob's zmk config](https://github.com/urob/zmk-config) and [Miryoku](https://github.com/manna-harbour/miryoku_zmk). If you're new and 3x5 or 3x6 keyboard, I highly recommend looking at urob's stuff, it is an elegant and well-documented source of inspiration, and his [timeless homerow mods](https://github.com/urob/zmk-config#timeless-homerow-mods) are the core of what makes a small keyboard layout work for me.
 
-Currently this is local build only, as I have not worked out how to get github actions builds to work with the ZMK mousekeys PR (2027/head:mousekeyspr)
+Thanks to [snicklepickles](https://github.com/snicklepickles/zmk-config) (who's repo I originally forked), and everyone else in the community who I've taken snippets and inspiration from. Hopefully you find some ideas here.
 
-
-## features
-- [Miryoku](https://github.com/manna-harbour/miryoku) keyboard layout
-- Mouse emulation (local build only)
-- [urob's timeless homerow mods](https://github.com/urob/zmk-config#timeless-homerow-mods) (`config/includes`)
-- French locale compatible layers (WIP)
-
-## antifeatures
-- broken mouse scrolling
-- broken actions build
-- unused layers floating around in keymap
+Github actions builds may or may not work, as I tend to build locally.
 
 
 ## local builds 
-Building locally is much faster for testing and debugging. Paths in `local-build.sh` are hardcoded.
+Building locally is much faster for testing and debugging. Paths in `scripts/local-build.sh` are absolute and hardcoded.
 
 Requirements:
 - initialize submodule: zmk-nodefree-config (`git submodule init`)

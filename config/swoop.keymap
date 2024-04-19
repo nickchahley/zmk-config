@@ -15,8 +15,7 @@
 #define NUMPAD  7
 #define SWAY    8
 
-#include "includes/settings.dtsi" // &lt layer tap settings
-#include "includes/behaviors_homerow_mods.dtsi"
+#include "../zmk-nodefree-config/keypos_def/keypos_36keys.h"
 #include "includes/combos.dtsi" // requires layer aliases defined
 #include "includes/morphs.dtsi"
 #include "includes/mouse.dtsi"
@@ -24,7 +23,15 @@
 #define XXX &none
 #define ___ &trans
 
+/* Global settings */
+
 #define QUICK_TAP_MS 175
+
+&lt {
+    tapping-term-ms = <200>;
+    quick_tap_ms = <QUICK_TAP_MS>;
+    flavor = "balanced";
+};
 
 /* Homerow mods from urob base.keymap */
 
@@ -42,6 +49,8 @@
         hold-trigger-key-positions = <TRIGGER_POS>; \
         hold-trigger-on-release; \
     )
+MAKE_HRM(hml, &kp, &kp, KEYS_R THUMBS)  // left-hand HRMs
+MAKE_HRM(hmr, &kp, &kp, KEYS_L THUMBS)  // right-hand HRMs
 
 /* Caps-word, num-word and smart-mouse */
 
@@ -84,13 +93,13 @@ ZMK_BEHAVIOR(smart_mouse, tri_state,
 #define CANCEL      &kp K_CANCEL             // cancel caps-word, num-word and smart-mouse
 
 ZMK_LAYER(def,
-    // ╭────────────────────────┬────────────────────────┬────────────────────────┬────────────────────────┬────────────────────────╮    ╭────────────────────────┬────────────────────────┬────────────────────────┬───────────────────────┬────────────────────────╮
-         &kp Q                    &kp W               &kp F               &kp P               &kp B                         &kp J                    &kp L               &kp U               &kp Y              &kp SQT
-         &hm_l LGUI A             &hm_l LCTL R             &hm_l LALT S             &hm_shift_l LSHIFT T     &kp G                         &kp M                    &hm_shift_r RSHIFT N     &hm_r RALT E             &hm_r RCTL I            &hm_r RGUI O
-         &hm_shift_l LSHIFT Z     &kp X                    &kp C                    &kp D                    &kp V                         &kp K                    &kp H                    &kp COMMA                &kp DOT                 &kp FSLH
-    // ╰────────────────────────┴────────────────────────┴────────────────────────┼────────────────────────┼────────────────────────┤    ├────────────────────────┼────────────────────────┼────────────────────────┼───────────────────────┼────────────────────────╯
-                                                           &lt MEDIA ESC            &lt NAV SPACE            &lt MOUSE TAB                 &lt SYM RET              &lt NUM BSPC             &lt FUNC DEL
-    //                                                   ╰────────────────────────┴────────────────────────┴────────────────────────╯    ╰────────────────────────┴────────────────────────┴────────────────────────╯
+    // ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮    ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮
+         &kp Q          &kp W          &kp F          &kp P          &kp B               &kp J          &kp L          &kp U          &kp Y          &kp SQT
+         &hml LGUI A    &hml LCTL R    &hml LALT S    &hml LSHIFT T  &kp G               &kp M          &hmr RSHIFT N  &hmr RALT E    &hmr RCTL I    &hmr RGUI O
+         &kp Z          &kp X          &kp C          &kp D          &kp V               &kp K          &kp H          &kp COMMA      &kp DOT        &kp FSLH
+    // ╰──────────────┴──────────────┴──────────────┼──────────────┼──────────────┤    ├──────────────┴──────────────┴──────────────┼──────────────┼──────────────╯
+                                       &lt MEDIA ESC  &lt NAV SPACE  &lt MOUSE TAB       &lt SYM RET    &lt NUM BSPC   &lt FUNC DEL
+    //                               ╰──────────────┴──────────────┴──────────────╯    ╰──────────────┴──────────────┴──────────────╯
 )
 ZMK_LAYER(nav,
     // ╭────────────────────────┬────────────────────────┬────────────────────────┬────────────────────────┬────────────────────────╮    ╭────────────────────────┬────────────────────────┬────────────────────────┬───────────────────────┬────────────────────────╮
