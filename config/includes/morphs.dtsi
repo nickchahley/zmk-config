@@ -1,138 +1,52 @@
-// I don't think either of these ctrl bspc/del mod morphs are working
+// reuse basic mod-morph scheme
+#define SIMPLE_MORPH(NAME, MOD, BINDING1, BINDING2) \
+    ZMK_BEHAVIOR(NAME, mod_morph, \
+        mods = <(MOD_L ## MOD|MOD_R ## MOD)>; \
+        bindings = <BINDING1>, <BINDING2>; \
+    )
+
+// tap: comma | shift + tap: semicolon | ctrl + shift + tap: <
+SIMPLE_MORPH(comma_morph, SFT, &kp COMMA, &comma_inner_morph)
+SIMPLE_MORPH(comma_inner_morph, CTL, &kp SEMICOLON, &kp LESS_THAN)
+
+// tap: dot | shift + tap: colon | ctrl + shift + tap: >
+SIMPLE_MORPH(dot_morph, SFT, &kp DOT, &dot_inner_morph)
+SIMPLE_MORPH(dot_inner_morph, CTL, &kp COLON, &kp GREATER_THAN)
+
+// tap: left/right parenthesis | shft + tap: less-than/greater-than
+SIMPLE_MORPH(lpar_lt, SFT, &kp LPAR, &kp LT)
+SIMPLE_MORPH(rpar_gt, SFT, &kp RPAR, &kp GT)
+
+// tap: backspace | lshft + tap: delete | lctr + tap: ctr-delete
+ZMK_BEHAVIOR(bs_del, mod_morph,
+    bindings = <&kp BSPC>, <&kp DEL>;
+    mods = <(MOD_LSFT|MOD_LCTL)>;
+    keep-mods = <MOD_LCTL>;
+)
+
+// Keeping this here as an exapmle of needing to provide hold tap with a dummy
+// binding cell when defining keymap ex. &lt_bspc NUM 0
+// https://www.reddit.com/r/zmk/comments/12ujlmb/combing_modmorph_and_layer_tap/
 ZMK_BEHAVIOR(mm_ctr_bspc, mod_morph,
 	bindings = <&kp LC(BSPC)>, <&kp BSPC>;
 	mods = <(MOD_LCTL|MOD_RCTL)>;
 )
-ZMK_BEHAVIOR(mm_ctr_del, mod_morph,
-	bindings = <&kp LC(DEL)>, <&kp DEL>;
-	mods = <(MOD_LCTL|MOD_RCTL)>;
-)
-
-// Need to provide hold tap with a dummy binding cell when defining keymap
-// ex. &lt_bspc NUM 0
-// https://www.reddit.com/r/zmk/comments/12ujlmb/combing_modmorph_and_layer_tap/
 ZMK_BEHAVIOR(lt_bspc, hold_tap,
 	tapping-term-ms = <200>;
 	quick-tap-ms = <175>;
 	bindings = <&mo>, <&mm_ctr_bspc>; 
 )
-ZMK_BEHAVIOR(lt_del, hold_tap,
-	tapping-term-ms = <200>;
-	quick-tap-ms = <175>;
-	bindings = <&mo>, <&mm_ctr_del>; 
-)
 
-
-// Unshift -- most of these are to be able to use shift-SYM to get NUM
-/ {
-    behaviors {
-        /omit-if-no-ref/ us_plus: unshift_plus {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp PLUS>, <&kp EQUAL>;
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-        /omit-if-no-ref/ us_amps: unshift_amps {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp AMPS>, <&kp N7>;
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        }; 
-        /omit-if-no-ref/ us_star: unshift_star {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp STAR>, <&kp N8>;
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-        /omit-if-no-ref/ us_lpar: unshift_lpar {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp LPAR>, <&kp DOT>;
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-        /omit-if-no-ref/ us_rpar: unshift_rpar {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp RPAR>, <&kp N0>;
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-        /omit-if-no-ref/ us_rbrc: unshift_rbrc {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp RBRC>, <&kp RBKT>;
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-        /omit-if-no-ref/ us_lbrc: unshift_lbrc {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp LBRC>, <&kp LBKT>;
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-        /omit-if-no-ref/ us_colon: unshift_colon {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp COLON>, <&kp SEMI>;
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-        /omit-if-no-ref/ us_dllr: unshift_dllr {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp DLLR>, <&kp N4>;
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-        /omit-if-no-ref/ us_prcnt: unshift_prcnt {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp PRCNT>, <&kp N5>;
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-        /omit-if-no-ref/ us_caret: unshift_caret {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp CARET>, <&kp N6>;
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-        /omit-if-no-ref/ us_tilde: unshift_tilde {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp TILDE>, <&kp GRAVE>;
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-        /omit-if-no-ref/ us_excl: unshift_excl {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp EXCL>, <&kp N1>;
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-        /omit-if-no-ref/ us_at: unshift_at {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp AT>, <&kp N2>;
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-        /omit-if-no-ref/ us_hash: unshift_hash {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp HASH>, <&kp N3>;
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-        /omit-if-no-ref/ us_pipe: unshift_pipe {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp PIPE>, <&kp BSLH>;
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-        /omit-if-no-ref/ us_under: unshift_under {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp UNDER>, <&kp MINUS>;
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-		/omit-if-no-ref/ dot_lpar: dot_lpar {
-			compatible = "zmk,behavior-mod-morph";
-			#binding-cells = <0>;
-			bindings = <&kp DOT>, <&kp LPAR>;
-			mods = <(MOD_LSFT|MOD_RSFT)>;
-		};
-    };
-};
+// Unshift -- use shift-SYM to get NUM
+SIMPLE_MORPH(us_plus,  SFT, &kp PLUS,  &kp EQUAL)
+SIMPLE_MORPH(us_amps,  SFT, &kp AMPS,  &kp N7)
+SIMPLE_MORPH(us_star,  SFT, &kp STAR,  &kp N8)
+SIMPLE_MORPH(us_dllr,  SFT, &kp DLLR,  &kp N4)
+SIMPLE_MORPH(us_prcnt, SFT, &kp PRCNT, &kp N5)
+SIMPLE_MORPH(us_caret, SFT, &kp CARET, &kp N6)
+SIMPLE_MORPH(us_excl,  SFT, &kp EXCL,  &kp N1)
+SIMPLE_MORPH(us_at,    SFT, &kp AT,    &kp N2)
+SIMPLE_MORPH(us_hash,  SFT, &kp HASH,  &kp N3)
+SIMPLE_MORPH(us_tilde, SFT, &kp TILDE, &kp GRAVE)
+SIMPLE_MORPH(us_pipe,  SFT, &kp PIPE,  &kp BSLH)
+SIMPLE_MORPH(us_under, SFT, &kp UNDER, &kp MINUS)

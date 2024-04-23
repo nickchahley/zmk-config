@@ -31,6 +31,15 @@
     flavor = "balanced";
 };
 
+&sk {  // sticky-key config
+    release-after-ms = <900>;  // release after 0.6s
+    quick-release;             // no double capitalization when rolling keys
+};
+
+&sl {  // sticky-layer config
+    ignore-modifiers;          // allow chording sticky mods & layers
+};
+
 /* Homerow mods from urob base.keymap */
 
 #define KEYS_L LT0 LT1 LT2 LT3 LT4 LM0 LM1 LM2 LM3 LM4 LB0 LB1 LB2 LB3 LB4  // left hand
@@ -88,14 +97,14 @@ ZMK_BEHAVIOR(smart_mouse, tri_state,
 )
 
 // aliases
-#define CANCEL      &kp K_CANCEL             // cancel caps-word, num-word and smart-mouse
-#define PRNT_MODE &kp LA(LS(S))
+#define CANCEL    &kp K_CANCEL  // cancel caps-word, num-word and smart-mouse
+#define PRNT_MODE &kp LA(LS(S)) // bound in swaywm
 
 ZMK_LAYER(def,
 // ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮    ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮
      &kp Q          &kp W          &kp F          &kp P          &kp B               &kp J          &kp L          &kp U          &kp Y          &kp SQT
      &hml LGUI A    &hml LCTL R    &hml LALT S    &hml LSHIFT T  &kp G               &kp M          &hmr RSHIFT N  &hmr RALT E    &hmr RCTL I    &hmr RGUI O
-     &kp Z          &kp X          &kp C          &kp D          &kp V               &kp K          &kp H          &kp COMMA      &kp DOT        &kp FSLH
+     &kp Z          &kp X          &kp C          &kp D          &kp V               &kp K          &kp H          &comma_morph   &dot_morph     &kp FSLH
 // ╰──────────────┴──────────────┴──────────────┼──────────────┼──────────────┤    ├──────────────┴──────────────┴──────────────┼──────────────┼──────────────╯
                                    &lt MEDIA ESC  &lt NAV SPACE  &lt MOUSE TAB       &lt SYM RET    &lt NUM BSPC   &lt FUNC DEL
 //                               ╰──────────────┴──────────────┴──────────────╯    ╰──────────────┴──────────────┴──────────────╯
@@ -106,25 +115,25 @@ ZMK_LAYER(nav,
      &kp LGUI       &kp LCTL       &kp LALT       &kp LSHIFT     ___                 &caps_word     &kp LEFT       &kp DOWN       &kp UP         &kp RIGHT
      &kp K_UNDO     &kp K_CUT      &kp K_COPY     &kp LC(V)      &kp K_REDO          ___            &kp HOME       &kp PG_DN      &kp PG_UP      &kp END
 // ╰──────────────┴──────────────┴──────────────┼──────────────┼──────────────┤    ├──────────────┴──────────────┴──────────────┼──────────────┼──────────────╯
-                                   ___            ___            &smart_mouse        &kp RET        &mm_ctr_bspc   CANCEL 
+                                   CANCEL         ___            &smart_mouse        &kp RET        &kp BSPC       &kp DEL 
 //                               ╰──────────────┴──────────────┴──────────────╯    ╰──────────────┴──────────────┴──────────────╯
 )
 ZMK_LAYER(num,
 // ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮    ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮
-     ___            &kp N7         &kp N8         &kp N9         ___                  ___            ___           ___            ___            ___
-     &us_colon      &kp N4         &kp N5         &kp N6         &kp EQUAL            ___            &kp RSHIFT    &kp RALT       &kp RCTL       &kp RGUI
+     ___            &kp N7         &kp N8         &kp N9         &kp MINUS            ___            ___           ___            ___            ___
+     &hml LGUI N0   &hml LCTL N4   &hml LALT N5   &hml LSHIFT N6 &kp EQUAL            ___            &kp RSHIFT    &kp RALT       &kp RCTL       &kp RGUI
      &kp GRAVE      &kp N1         &kp N2         &kp N3         &kp BSLH             ___            &kp SPACE     &kp COMMA      &kp DOT        &kp FSLH
 // ╰──────────────┴──────────────┴──────────────┼──────────────┼──────────────┤    ├──────────────┴──────────────┴──────────────┼──────────────┼──────────────╯
-                                   &dot_lpar      &kp N0         &kp MINUS            &kp SPACE      &kp BSPC      &kp DEL
+                                   ___            &kp N0         &kp MINUS            &kp SPACE      &kp BSPC      &kp DEL
 //                               ╰──────────────┴──────────────┴──────────────╯    ╰──────────────┴──────────────┴──────────────╯
 )
 ZMK_LAYER(sym,
 // ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮    ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮
-     &us_lbrc       &us_amps       &us_star       &us_lpar       &us_rbrc            ___            ___            ___            ___            &bootloader
-     &kp SEMI       &us_dllr       &us_prcnt      &us_caret      &us_plus            ___            &kp RSHIFT     &kp RALT       &kp RCTL       &kp RGUI
+     ___            &us_amps       &us_star       ___            &us_under           ___            ___            ___            ___            &bootloader
+     ___            &us_dllr       &us_prcnt      &us_caret      &us_plus            ___            &kp RSHIFT     &kp RALT       &kp RCTL       &kp RGUI
      &us_tilde      &us_excl       &us_at         &us_hash       &us_pipe            ___            ___            ___            ___            ___
 // ╰──────────────┴──────────────┴──────────────┼──────────────┼──────────────┤    ├──────────────┴──────────────┴──────────────┼──────────────┼──────────────╯
-                                   &us_lpar       &us_rpar       &us_under           ___            ___            ___
+                                   ___            ___            &us_under           ___            ___            ___
 //                               ╰──────────────┴──────────────┴──────────────╯    ╰──────────────┴──────────────┴──────────────╯
 )
 ZMK_LAYER(func,
