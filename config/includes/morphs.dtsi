@@ -17,11 +17,15 @@ SIMPLE_MORPH(dot_inner_morph, CTL, &kp COLON, &kp GREATER_THAN)
 SIMPLE_MORPH(lpar_lt, SFT, &kp LPAR, &kp LT)
 SIMPLE_MORPH(rpar_gt, SFT, &kp RPAR, &kp GT)
 
-// tap: backspace | lshft + tap: delete | lctr + tap: ctr-delete
+// tap: backspace | mod + tap: delete 
 ZMK_BEHAVIOR(bs_del, mod_morph,
     bindings = <&kp BSPC>, <&kp DEL>;
-    mods = <(MOD_LSFT|MOD_LCTL)>;
-    keep-mods = <MOD_LCTL>;
+    mods = <(MOD_LSFT)>;
+)
+ZMK_BEHAVIOR(lt_bs_del, hold_tap,
+	tapping-term-ms = <200>;
+	quick-tap-ms = <175>;
+	bindings = <&mo>, <&bs_del>; 
 )
 
 // Keeping this here as an exapmle of needing to provide hold tap with a dummy
