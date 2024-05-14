@@ -1,0 +1,92 @@
+// Could really just call this 'behaviors'
+// Seeing if I find it more convinient for editing to move more and more stuff
+// out of the base keymap
+
+/* Caps-word, num-word and smart-mouse */
+
+// tap: sticky-shift | shift + tap/ double-tap: caps-word | hold: shift
+ZMK_BEHAVIOR(smart_shft, mod_morph,
+    bindings = <&sk LSHFT>, <&caps_word>;
+    mods = <(MOD_LSFT)>;
+)
+
+&caps_word {
+    continue-list = <UNDERSCORE MINUS>;
+     /delete-property/ ignore-modifiers; // mods deactivate caps-word, requires PR #1451
+};
+
+// double-tap: num-word | tap: sticky num-layer | hold: num-layer
+#define SMART_NUM &smart_num NUM 0
+ZMK_BEHAVIOR(smart_num, hold_tap,
+    flavor = "balanced";
+    tapping-term-ms = <200>;
+    quick-tap-ms = <QUICK_TAP_MS>;
+    bindings = <&mo>, <&num_dance>;
+)
+ZMK_BEHAVIOR(num_dance, tap_dance,
+    tapping-term-ms = <250>;
+    // bindings = <&num_word>, <&sl NUM>;  // reverse this for sticky-num on single tap
+    bindings = <&sl NUM>, <&num_word>;  // tap: sticky num | double-tab: num_word num_word
+)
+
+// tap sticky num | dtap ret | hold num
+#define RET_NUM &ret_num NUM 0
+ZMK_BEHAVIOR(ret_num, hold_tap,
+    flavor = "balanced";
+    tapping-term-ms = <300>;
+    quick-tap-ms = <QUICK_TAP_MS>;
+    bindings = <&mo>, <&inner_ret_num>;
+)
+ZMK_BEHAVIOR(inner_ret_num, tap_dance,
+    tapping-term-ms = <300>;
+    bindings = <&sl NUM>, <&kp RET>;  // tap | double-tab 
+)
+
+// tap num_word | dtap esc | hold media
+#define NUM_MEDIA &num_media MEDIA 0
+ZMK_BEHAVIOR(num_media, hold_tap,
+    flavor = "balanced";
+    tapping-term-ms = <200>;
+    quick-tap-ms = <QUICK_TAP_MS>;
+    bindings = <&mo>, <&inner_num_media>;
+)
+ZMK_BEHAVIOR(inner_num_media, tap_dance,
+    tapping-term-ms = <250>;
+    bindings = <&num_word>, <&kp ESC>; // tap | double-tab 
+)
+
+&num_word {  // num-word, requires PR #1451
+    layers = <NUM>;
+    continue-list = <BSPC DEL DOT COMMA PLUS MINUS STAR FSLH BSLH EQUAL RSHIFT RALT LCTL RGUI>;
+};
+
+// smart-mouse, requires PR #1366
+ZMK_BEHAVIOR(smart_mouse, tri_state,
+    bindings = <&tog MOUSE>, <&none>, <&tog MOUSE>;
+    ignored-key-positions = <LT1 LT3 LM1 LM2 LM3 LM4 RT0 RT1 RT2 RT3 RT4 RM0 RM1 RM2 RM3 RM4 RB0 RB1 RB2 RB3 RH0 RH1 RH2>;
+    ignored-layers = <MOUSE>;
+)
+
+// smart-nav
+ZMK_BEHAVIOR(smart_nav, tri_state,
+    bindings = <&tog NAV>, <&none>, <&tog NAV>;
+    // ignored-key-positions = <LT1 LT3 LM1 LM2 LM3 LM4 RT0 RT1 RT2 RT3 RT4 RM0 RM1 RM2 RM3 RM4 RB0 RB1 RB2 RB3 RH0 RH1 RH2>;
+    ignored-key-positions = <KEYS_R RH0 RH1 RH2>;
+    ignored-layers = <NAV>;
+)
+
+/* Custom behaviors */
+
+// tap: space | shift + tap: dot -> space -> sticky shift | hold: activate layer
+ZMK_BEHAVIOR(lt_spc, hold_tap,
+    flavor = "balanced";
+    tapping-term-ms = <200>;
+    quick-tap-ms = <QUICK_TAP_MS>;
+    bindings = <&mo>, <&spc_morph>;
+)
+SIMPLE_MORPH(spc_morph, SFT, &kp SPACE, &dot_spc)
+ZMK_BEHAVIOR(dot_spc, macro,
+    wait-ms = <0>;
+    tap-ms = <5>;
+    bindings = <&kp DOT &kp SPACE &sk LSHFT>;
+)
