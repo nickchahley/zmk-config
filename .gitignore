@@ -1,2 +1,4 @@
 build/
 session.vim
+keymap-img/
+scripts/vim.vim

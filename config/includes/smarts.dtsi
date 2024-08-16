@@ -2,7 +2,16 @@
 // Seeing if I find it more convinient for editing to move more and more stuff
 // out of the base keymap
 
-/* Caps-word, num-word and smart-mouse */
+// I want tap: sticky layer func, hold mo func (to allow c-a-FNx presses)
+// #define SL_FUNC &sl FUNC 
+// ZMK_BEHAVIOR(sl_func, hold_tap,
+//     flavor = "balanced";
+//     tapping-term-ms = <200>;
+//     quick-tap-ms = <QUICK_TAP_MS>;
+// 	bindings = <&mo>, <SL_FUNC>;
+// )
+
+/* "Smart Behaviors", ex. Caps-word, num-word and smart-mouse */
 
 // tap: sticky-shift | shift + tap/ double-tap: caps-word | hold: shift
 ZMK_BEHAVIOR(smart_shft, mod_morph,
@@ -25,11 +34,11 @@ ZMK_BEHAVIOR(smart_num, hold_tap,
 )
 ZMK_BEHAVIOR(num_dance, tap_dance,
     tapping-term-ms = <250>;
-    // bindings = <&num_word>, <&sl NUM>;  // reverse this for sticky-num on single tap
-    bindings = <&sl NUM>, <&num_word>;  // tap: sticky num | double-tab: num_word num_word
+    // bindings = <&num_word>, <&sl NUM>; // tap: num_word | dbl: sticky num
+    bindings = <&sl NUM>, <&num_word>; // tap: sticky num | double-tab: num_word 
 )
 
-// tap sticky num | dtap ret | hold num
+// tap sticky num | dbl ret | hold num
 #define RET_NUM &ret_num NUM 0
 ZMK_BEHAVIOR(ret_num, hold_tap,
     flavor = "balanced";
@@ -42,7 +51,7 @@ ZMK_BEHAVIOR(inner_ret_num, tap_dance,
     bindings = <&sl NUM>, <&kp RET>;  // tap | double-tab 
 )
 
-// tap num_word | dtap esc | hold media
+// tap num_word | dbl esc | hold media
 #define NUM_MEDIA &num_media MEDIA 0
 ZMK_BEHAVIOR(num_media, hold_tap,
     flavor = "balanced";
@@ -61,16 +70,29 @@ ZMK_BEHAVIOR(inner_num_media, tap_dance,
 };
 
 // smart-mouse, requires PR #1366
+#define SMART_MOUSE &new_smart_mouse MOUSE 0
+ZMK_BEHAVIOR(new_smart_mouse, hold_tap,
+    flavor = "balanced";
+    tapping-term-ms = <200>;
+    quick-tap-ms = <QUICK_TAP_MS>;
+    bindings = <&mo>, <&mouse_dance>;
+)
+
+ZMK_BEHAVIOR(mouse_dance, tap_dance,
+    tapping-term-ms = <250>;
+    bindings = <&kp TAB>, <&smart_mouse>; // tap: sticky num | double-tab: num_word 
+)
+
 ZMK_BEHAVIOR(smart_mouse, tri_state,
     bindings = <&tog MOUSE>, <&none>, <&tog MOUSE>;
-    ignored-key-positions = <LT1 LT3 LM1 LM2 LM3 LM4 RT0 RT1 RT2 RT3 RT4 RM0 RM1 RM2 RM3 RM4 RB0 RB1 RB2 RB3 RH0 RH1 RH2>;
+    ignored-key-positions = <LT1 LM1 LM2 LM3 LM4 RT0 RT1 RT2 RT3 RT4 RM0 RM1 RM2 RM3 RM4 RB0 RB1 RB2 RB3 RH0 RH1 RH2>;
+    // ignored-key-positions = <KEYS_L LH1 LH0 KEYS_R RH0 RH1 RH2>;
     ignored-layers = <MOUSE>;
 )
 
-// smart-nav
+// smart-nav 
 ZMK_BEHAVIOR(smart_nav, tri_state,
     bindings = <&tog NAV>, <&none>, <&tog NAV>;
-    // ignored-key-positions = <LT1 LT3 LM1 LM2 LM3 LM4 RT0 RT1 RT2 RT3 RT4 RM0 RM1 RM2 RM3 RM4 RB0 RB1 RB2 RB3 RH0 RH1 RH2>;
     ignored-key-positions = <KEYS_R RH0 RH1 RH2>;
     ignored-layers = <NAV>;
 )
@@ -90,3 +112,27 @@ ZMK_BEHAVIOR(dot_spc, macro,
     tap-ms = <5>;
     bindings = <&kp DOT &kp SPACE &sk LSHFT>;
 )
+
+// tap copy, 2x tap cut
+ZMK_BEHAVIOR(y_x, tap_dance,
+    tapping-term-ms = <200>;
+	bindings = <&kp LC(C)>, <&kp LC(X)>;
+)
+
+// For rotary encoders
+/ {
+	behaviors {
+		scroll_up_down: behavior_sensor_rotate_mouse_wheel_up_down {
+			compatible = "zmk,behavior-sensor-rotate";
+			#sensor-binding-cells = <0>;
+			bindings = <&msc SCRL_UP>, <&msc SCRL_DOWN>;
+			tap-ms = <10>;
+		};
+		scroll_right_left: behavior_sensor_rotate_mouse_wheel_right_left {
+			compatible = "zmk,behavior-sensor-rotate";
+			#sensor-binding-cells = <0>;
+			bindings = <&msc SCRL_RIGHT>, <&msc SCRL_LEFT>;
+			tap-ms = <20>;
+		};
+	};
+};

@@ -1,17 +1,35 @@
+// /* source keypos definitions */
+// #include "../zmk-nodefree-config/keypos_def/keypos_36keys.h"
+//
+// /* map extra keys */
+// #define X_LH &trans
+// #define X_RH &trans
+//
+// /* source the main keymap */
+// #include "base.keymap"
+//
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
-#include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/outputs.h>
 #include "../zmk-nodefree-config/helper.h"
 #include "../zmk-nodefree-config/keypos_def/keypos_36keys.h"
 
+/* activate bluetooth */
+#define CONFIG_WIRELESS 1
+
+#if CONFIG_WIRELESS
+    #include <dt-bindings/zmk/bt.h>
+    #define _BT_SEL_KEYS_ &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_CLR
+#else
+    #define _BT_SEL_KEYS_ &trans &trans &trans &trans &trans
+#endif
+
 #define DEF     0
 #define NAV     1
 #define NUM     2
-#define SYM     3
-#define FUNC    4
-#define MOUSE   5
-#define MEDIA   6
+#define FUNC    3
+#define MOUSE   4
+#define MEDIA   5
 
 /* Global settings */
 
@@ -55,52 +73,50 @@ MAKE_HRM(hml_repeat, &kp, &key_repeat, KEYS_R THUMBS) // for HRM combo
 // Include after global settings 
 #include "includes/morphs.dtsi"
 #include "includes/mouse.dtsi"
-#include "includes/combos.dtsi" // requires layer aliases, HRMs 
 #include "includes/smarts.dtsi" // requires global settings
+#include "includes/combos.dtsi" // requires layer aliases, HRMs 
 
 // aliases
-#define XXX &none
-#define ___ &trans
-#define CANCEL    &kp K_CANCEL  // cancel caps-word, num-word and smart-mouse
-#define PRNT_MODE &kp LA(LS(S)) // bound in swayLm
+#define XXX        &none
+#define ___        &trans
+#define CANCEL     &kp K_CANCEL  // cancel caps-word, num-word and smart-mouse
+#define PASTE      &kp LC(LS(V))
+#define PRNT_MODE  &kp LA(LS(S)) // bound in swayWm
+#define ROT_DEF    &inc_dec_kp RIGHT LEFT &inc_dec_kp UP DOWN 
+#define ROT_SCRL   &scroll_right_left &scroll_up_down 
+#define ROT_MEDIA  &inc_dec_kp C_BRI_DN C_BRI_UP &inc_dec_kp C_VOL_UP C_VOL_DN
 
-ZMK_LAYER(def,
+ZMK_LAYER_3(def,
 // ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮    ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮
      &kp Q          &kp W          &kp F          &kp P          &kp B               &kp J          &kp L          &kp U          &kp Y          &kp SQT
      &hml LGUI A    &hml LCTL R    &hml LALT S    &hml LSHIFT T  &kp G               &kp M          &hmr RSHIFT N  &hmr RALT E    &hmr LCTL I    &hmr RGUI O
      &kp Z          &kp X          &kp C          &kp D          &kp V               &kp K          &kp H          &comma_morph   &dot_morph     &kp FSLH
 // ╰──────────────┴──────────────┴──────────────┼──────────────┼──────────────┤    ├──────────────┴──────────────┴──────────────┼──────────────┼──────────────╯
-                                   NUM_MEDIA      &lt_spc NAV 0  &lt MOUSE TAB       RET_NUM        &smart_shft    &lt FUNC BSPC
+                                   &mo MEDIA      &lt_spc NAV 0  &lt MOUSE TAB       SMART_NUM      &smart_shft    &sl FUNC
 //                               ╰──────────────┴──────────────┴──────────────╯    ╰──────────────┴──────────────┴──────────────╯
+, ROT_DEF 
 )
-ZMK_LAYER(nav,
+ZMK_LAYER_3(nav,
 // ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮    ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮
      ___            ___            ___            ___            ___                 ___            ___            ___            ___            ___
      &kp LGUI       &kp LCTL       &kp LALT       &kp LSHIFT     ___                 &key_repeat    &kp LEFT       &kp DOWN       &kp UP         &kp RIGHT
-     &kp K_UNDO     &kp K_CUT      &kp K_COPY     &kp LC(V)      &kp K_REDO          ___            &kp HOME       &kp PG_DN      &kp PG_UP      &kp END
+     &kp K_UNDO     &kp K_CUT      &kp K_COPY     PASTE          &kp K_REDO          ___            &kp HOME       &kp PG_DN      &kp PG_UP      &kp END
 // ╰──────────────┴──────────────┴──────────────┼──────────────┼──────────────┤    ├──────────────┴──────────────┴──────────────┼──────────────┼──────────────╯
-                                   CANCEL         ___            ___                 ___            ___            ___ 
+                                   ___            ___            ___                 ___            ___            ___ 
 //                               ╰──────────────┴──────────────┴──────────────╯    ╰──────────────┴──────────────┴──────────────╯
+, ROT_SCRL
 )
-ZMK_LAYER(num,
+ZMK_LAYER_3(num,
 // ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮    ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮
-     &kp PLUS       &kp N7         &kp N8         &kp N9         &kp MINUS            ___            ___           ___            ___            ___
-     &hml LGUI N0   &hml LCTL N4   &hml LALT N5   &hml LSHIFT N6 &kp EQUAL            ___            &kp RSHIFT    &kp RALT       &kp RCTL       &kp RGUI
-     &kp GRAVE      &kp N1         &kp N2         &kp N3         &kp BSLH             ___            &kp SPACE     &kp COMMA      &kp DOT        &kp FSLH
+     &kp PLUS       &kp N7         &kp N8         &kp N9         &kp EQUAL            ___            ___           ___            ___            ___
+     &hml LGUI N0   &hml LCTL N4   &hml LALT N5   &hml LSHIFT N6 &kp MINUS            ___            &kp RSHIFT    &kp RALT       &kp RCTL       &kp RGUI
+     &kp GRAVE      &kp N1         &kp N2         &kp N3         &kp BSLH             ___            ___           ___            ___            ___
 // ╰──────────────┴──────────────┴──────────────┼──────────────┼──────────────┤    ├──────────────┴──────────────┴──────────────┼──────────────┼──────────────╯
-                                   ___            ___            &kp LS(MINUS)        ___            ___            ___ 
+                                   ___            ___            &kp LS(MINUS)        &mo DEF        ___           CANCEL 
 //                               ╰──────────────┴──────────────┴──────────────╯    ╰──────────────┴──────────────┴──────────────╯
+, ROT_SCRL
 )
-ZMK_LAYER(sym,
-// ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮    ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮
-     ___            &us_amps       &us_star       ___            &us_under           ___            ___            ___            ___            &bootloader
-     ___            &us_dllr       &us_prcnt      &us_caret      &us_plus            ___            &kp RSHIFT     &kp RALT       &kp RCTL       &kp RGUI
-     &us_tilde      &us_excl       &us_at         &us_hash       &us_pipe            ___            ___            ___            ___            ___
-// ╰──────────────┴──────────────┴──────────────┼──────────────┼──────────────┤    ├──────────────┴──────────────┴──────────────┼──────────────┼──────────────╯
-                                   ___            ___            &us_under           ___            ___            ___
-//                               ╰──────────────┴──────────────┴──────────────╯    ╰──────────────┴──────────────┴──────────────╯
-)
-ZMK_LAYER(func,
+ZMK_LAYER_3(func,
 // ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮    ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮
      &kp F12        &kp F7         &kp F8         &kp F9         PRNT_MODE           ___            ___            ___            ___            &bootloader
      &kp F11        &kp F4         &kp F5         &kp F6         ___                 ___            &kp RSHIFT     &kp RALT       &kp RCTL       &kp RGUI
@@ -108,23 +124,26 @@ ZMK_LAYER(func,
 // ╰──────────────┴──────────────┴──────────────┼──────────────┼──────────────┤    ├──────────────┴──────────────┴──────────────┼──────────────┼──────────────╯
                                    ___            ___            ___                 ___             ___            ___
 //                               ╰──────────────┴──────────────┴──────────────╯    ╰──────────────┴──────────────┴──────────────╯
+, ROT_DEF
 )
-ZMK_LAYER(mouse,
+ZMK_LAYER_3(mouse,
 // ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮    ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮
-     &bootloader    ___            ___            ___            ___                 ___            ___            ___            ___           ___
+     ___            ___            ___            ___            ___                 CANCEL         ___            ___            ___           ___
      &kp LGUI       &kp LCTL       &kp LALT       &kp LSHIFT     ___                 U_PREV         U_MS_L         U_MS_D         U_MS_U        U_MS_R
      ___            ___            ___            ___            ___                 U_NEXT         U_WH_L         U_WH_D         U_WH_U        U_WH_R
 // ╰──────────────┴──────────────┴──────────────┼──────────────┼──────────────┤    ├──────────────┴──────────────┴──────────────┼──────────────┼──────────────╯
-                                   ___            ___            ___                 U_BTN1         U_BTN2         U_BTN3
+                                   CANCEL         ___            U_BTN3              U_BTN1         U_BTN2         U_BTN3
 //                               ╰──────────────┴──────────────┴──────────────╯    ╰──────────────┴──────────────┴──────────────╯
+, ROT_MEDIA
 )
-ZMK_LAYER(media,
+ZMK_LAYER_3(media,
 // ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮    ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮
-     &out OUT_USB   &out OUT_BLE   ___            ___             ___                ___            ___            &kp C_BRI_DN   &kp C_BRI_UP   ___ 
+     &bootloader    &out OUT_USB   &out OUT_BLE   ___             ___                ___            &kp C_BRI_DN   &kp C_BRI_UP   ___            ___
      &kp LGUI       &kp LCTL       &kp LALT       &kp LSHIFT      ___                &kp C_MUTE     &kp C_PREV     &kp K_VOL_DN   &kp K_VOL_UP   &kp C_NEXT
-     &bt BT_CLR     &bt BT_SEL 0   &bt BT_SEL 1   &bt BT_SEL 2    &bt BT_SEL 3       ___            ___             ___            ___           ___
+                                   _BT_SEL_KEYS_                                       ___            ___             ___            ___           ___
 // ╰──────────────┴──────────────┴──────────────┼──────────────┼──────────────┤    ├──────────────┴──────────────┴──────────────┼──────────────┼──────────────╯
                                     ___            ___           ___                 &kp C_STOP     &kp C_PP       &kp C_MUTE
 //                               ╰──────────────┴──────────────┴──────────────╯    ╰──────────────┴──────────────┴──────────────╯
+, ROT_MEDIA
 )
 // vim: nowrap: ft=c: fdm=indent: expandtab:

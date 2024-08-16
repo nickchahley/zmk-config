@@ -1,0 +1,17 @@
+/* activate bluetooth */
+#define CONFIG_WIRELESS 1
+
+/* source keypos definitions */
+#include "../zmk-nodefree-config/keypos_def/keypos_42keys.h"
+
+/* map extra keys */
+#define X_LT &kp LC(EQUAL)
+#define X_LM &kp LC(MINUS)
+#define X_LB &kp LC(SPACE)
+#define X_RT &kp LC(LS(RET))
+#define X_RM &trans
+#define X_RB &trans
+
+/* source the main keymap */
+#include "base.keymap"
+

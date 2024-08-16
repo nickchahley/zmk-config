@@ -20,7 +20,6 @@ Use venv (ex. conda) of your choice to isolate west (I use the same one for qmk 
 ZMK_HEAD=$(pwd)
 
 # clone repo and initialize submodules
-git@github.com:nickchahley/miryoku-zmk-swoop.git && cd miryoku-zmk-swoop
 git submodule init
 
 # install west into a venv

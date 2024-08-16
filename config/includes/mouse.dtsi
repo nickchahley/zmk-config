@@ -1,4 +1,5 @@
 #include <dt-bindings/zmk/mouse.h>
+// #include <behaviors/mouse_keys.dtsi> // PR #2027 only?
 
 #define ZMK_MOUSE_DEFAULT_MOVE_VAL 1500
 #define ZMK_MOUSE_DEFAULT_SCRL_VAL 20
@@ -10,9 +11,21 @@
 #define U_MOUSE_SCROLL_TIME_TO_MAX 40
 #define U_MOUSE_SCROLL_DELAY 0
 
-#define U_BTN1 &mkp MB1
-#define U_BTN2 &mkp MB2
-#define U_BTN3 &mkp MB3
+&mmv {
+  acceleration-exponent = <U_MOUSE_MOVE_EXPONENT>;   // 1
+  time-to-max-speed-ms = <U_MOUSE_MOVE_TIME_TO_MAX>; // 40
+  delay-ms = <U_MOUSE_MOVE_DELAY>;                   // 0
+};
+
+&msc {
+  acceleration-exponent = <U_MOUSE_SCROLL_EXPONENT>;   // 0
+  time-to-max-speed-ms = <U_MOUSE_SCROLL_TIME_TO_MAX>; // 500
+  delay-ms = <U_MOUSE_SCROLL_DELAY>;                   // 10
+};
+
+#define U_BTN1 &mkp LCLK
+#define U_BTN2 &mkp RCLK
+#define U_BTN3 &mkp MCLK
 #define U_PREV &mkp MB4
 #define U_NEXT &mkp MB5
 #define U_MS_D &mmv MOVE_DOWN
@@ -24,14 +37,3 @@
 #define U_WH_R &msc SCRL_RIGHT
 #define U_WH_U &msc SCRL_UP
 
-&mmv {
-  acceleration-exponent = <U_MOUSE_MOVE_EXPONENT>;
-  time-to-max-speed-ms = <U_MOUSE_MOVE_TIME_TO_MAX>;
-  delay-ms = <U_MOUSE_MOVE_DELAY>;
-};
-
-&msc {
-  acceleration-exponent = <U_MOUSE_SCROLL_EXPONENT>;
-  time-to-max-speed-ms = <U_MOUSE_SCROLL_TIME_TO_MAX>;
-  delay-ms = <U_MOUSE_SCROLL_DELAY>;
-};
