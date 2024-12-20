@@ -70,8 +70,8 @@ ZMK_BEHAVIOR(inner_num_media, tap_dance,
 };
 
 // smart-mouse, requires PR #1366
-#define SMART_MOUSE &new_smart_mouse MOUSE 0
-ZMK_BEHAVIOR(new_smart_mouse, hold_tap,
+#define SMART_MOUSE &tab_smart_mouse_dance MOUSE 0
+ZMK_BEHAVIOR(tab_smart_mouse_dance, hold_tap,
     flavor = "balanced";
     tapping-term-ms = <200>;
     quick-tap-ms = <QUICK_TAP_MS>;
@@ -85,7 +85,11 @@ ZMK_BEHAVIOR(mouse_dance, tap_dance,
 
 ZMK_BEHAVIOR(smart_mouse, tri_state,
     bindings = <&tog MOUSE>, <&none>, <&tog MOUSE>;
-    ignored-key-positions = <LT1 LM1 LM2 LM3 LM4 RT0 RT1 RT2 RT3 RT4 RM0 RM1 RM2 RM3 RM4 RB0 RB1 RB2 RB3 RH0 RH1 RH2>;
+    ignored-key-positions = <
+		LT1 LM1 LM2 LM3 LM4 
+		RT0 RT1 RT2 RT3 RT4
+		RM0 RM1 RM2 RM3 RM4 
+		RB0 RB1 RB2 RB3 RH0 RH1 RH2>;
     // ignored-key-positions = <KEYS_L LH1 LH0 KEYS_R RH0 RH1 RH2>;
     ignored-layers = <MOUSE>;
 )

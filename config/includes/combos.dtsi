@@ -15,17 +15,25 @@
 #define COMBO_IDLE_FAST 150
 #define COMBO_IDLE_SLOW 50
 
+// Aliases
+// want: tmux prefix + sticky NUM (to switch windows)
+#define TMUX  &kp LC(SPACE)
+#define PASTE &kp LS(INS)
+#define SWAY_SYS      &kp LA(LG(J))
+#define SWAY_SCRATCH  &kp LA(EQUAL)
+
 // make homerow combos tap-only (so HRMs can be chorded instantaneously)
 #define HRC_ESC   &hml        LA(LCTL) ESC
 #define HRC_TAB   &hml        LC(LALT) TAB
 #define HRC_RPAR  &hmr        LS(LALT) LPAR
 #define HRC_LPAR  &hmr        LC(LALT) RPAR
 #define HRC_COLON &hmr        LG(LALT) COLON
-#define HRC_SCRAT &hmr        LG(LALT) LA(EQUAL) // sway scratchpad
+#define HRC_SCRAT &hmr        LG(LALT) LA(EQUAL) 
+//hr mod needs to be needs to be &kp, ex. not SWAY_SCRATCH
 #define HRC_REP   &hml_repeat LS(LALT) 0
 
-// want: tmux prefix + sticky NUM (to switch windows)
-#define TMUX &kp LC(SPACE)
+// Misc
+ZMK_COMBO(sway_sys, SWAY_SYS, RT1 RT2 RT3 RT4, DEF, COMBO_TERM_FAST, COMBO_IDLE_FAST)
 
 // Right hand horizontal
 ZMK_COMBO(bspc,      &bs_del,   RT1 RT2, DEF NAV NUM, COMBO_TERM_FAST, COMBO_IDLE_FAST)
@@ -48,14 +56,13 @@ ZMK_COMBO(zou,    &kp LC(MINUS), LM4 LM3, DEF     NUM, COMBO_TERM_FAST, COMBO_ID
 ZMK_COMBO(repeat, HRC_REP,       LT3 LT2, DEF NAV NUM, COMBO_TERM_FAST, COMBO_IDLE_FAST)
 ZMK_COMBO(tmux,   TMUX,          LT2 LT1, DEF NAV NUM, COMBO_TERM_FAST, COMBO_IDLE_FAST)
 ZMK_COMBO(mouse,  &smart_mouse,  LT3 LT1, DEF NAV NUM, COMBO_TERM_FAST, COMBO_IDLE_FAST)
-ZMK_COMBO(nouse,  &kp K_CANCEL,  LT3 LT1, MOUSE,       COMBO_TERM_FAST, COMBO_IDLE_FAST)
 ZMK_COMBO(ret,    &kp RET,       LM2 LM1, DEF NAV NUM, COMBO_TERM_FAST, COMBO_IDLE_FAST)
 ZMK_COMBO(esc,    HRC_ESC,       LM3 LM2, DEF NAV NUM, COMBO_TERM_FAST, COMBO_IDLE_FAST)
 ZMK_COMBO(nav,    &smart_nav,    LB3 LB1, DEF NAV NUM, COMBO_TERM_FAST, COMBO_IDLE_FAST)
 ZMK_COMBO(co_cu,  &y_x,          LB3 LB2, DEF NAV NUM, COMBO_TERM_FAST, COMBO_IDLE_FAST)
 
 // TODO have copy cut inside of mouse layer???
-ZMK_COMBO(paste,  &kp LS(INS),   LB2 LB1, DEF NAV NUM MOUSE, COMBO_TERM_FAST, COMBO_IDLE_FAST)
+ZMK_COMBO(paste,  PASTE,   LB2 LB1, DEF NAV NUM MOUSE, COMBO_TERM_FAST, COMBO_IDLE_FAST)
 
 // Right hand vertical
 ZMK_COMBO(amps,  &kp AMPS,  RT3 RM3, DEF NAV NUM, COMBO_TERM_SLOW, COMBO_IDLE_SLOW)

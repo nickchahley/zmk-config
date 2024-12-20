@@ -22,17 +22,17 @@ if [[ ($# == 0 ) || ( $@ == "--help" ) || ( $@ == "-h" ) ]]
 then
 	echo "Usage: $0 <shield>"
 	echo "Build firmware for shield using 'config/<shield>.conf'"
+	echo "board is assumed nice_nano_v2"
 	exit 1
 fi
 shield="$1"
 
+[[ -z $HOST_CONFIG_DIR ]] && HOST_CONFIG_DIR="."
+[[ -z $ZMK_APP ]] && ZMK_APP="../zmk/app"
 
-build_base="/home/nikoli/personal/keyboard/zmk-firmware/zmk-config/build/${shield}"
-zmk_config="/home/nikoli/personal/keyboard/zmk-firmware/zmk-config/config"
+build_base=$(realpath "$HOST_CONFIG_DIR/build/${shield}")
+zmk_config=$(realpath "$HOST_CONFIG_DIR/config")
 board="nice_nano_v2"
-
-[[ -z $HOST_CONFIG_DIR ]] && HOST_CONFIG_DIR=""
-[[ -z $ZMK_APP ]] && ZMK_APP="/home/nikoli/personal/keyboard/zmk-firmware/zmk/app"
 
 
 build_zmk () {

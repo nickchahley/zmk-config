@@ -82,9 +82,17 @@ MAKE_HRM(hml_repeat, &kp, &key_repeat, KEYS_R THUMBS) // for HRM combo
 #define CANCEL     &kp K_CANCEL  // cancel caps-word, num-word and smart-mouse
 #define PASTE      &kp LC(LS(V))
 #define PRNT_MODE  &kp LA(LS(S)) // bound in swayWm
-#define ROT_DEF    &inc_dec_kp RIGHT LEFT &inc_dec_kp UP DOWN 
+
+/* Rotary encoders
+ * When two: nav/scrolling as defaults is fun
+ * When one: probably just do media, or l/r scrolling (?)
+ * scorlling is tricky since N triggers to see a scroll chage != same for
+ * media/nav
+*/
+#define ROT_NAV    &inc_dec_kp LEFT RIGHT &inc_dec_kp UP DOWN 
 #define ROT_SCRL   &scroll_right_left &scroll_up_down 
-#define ROT_MEDIA  &inc_dec_kp C_BRI_DN C_BRI_UP &inc_dec_kp C_VOL_UP C_VOL_DN
+#define ROT_MEDIA  &inc_dec_kp C_VOL_DN C_VOL_UP &inc_dec_kp C_BRI_DN C_BRI_UP
+#define ROT_DEF ROT_NAV
 
 ZMK_LAYER_3(def,
 // ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮    ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮
@@ -92,7 +100,7 @@ ZMK_LAYER_3(def,
      &hml LGUI A    &hml LCTL R    &hml LALT S    &hml LSHIFT T  &kp G               &kp M          &hmr RSHIFT N  &hmr RALT E    &hmr LCTL I    &hmr RGUI O
      &kp Z          &kp X          &kp C          &kp D          &kp V               &kp K          &kp H          &comma_morph   &dot_morph     &kp FSLH
 // ╰──────────────┴──────────────┴──────────────┼──────────────┼──────────────┤    ├──────────────┴──────────────┴──────────────┼──────────────┼──────────────╯
-                                   &mo MEDIA      &lt_spc NAV 0  &lt MOUSE TAB       SMART_NUM      &smart_shft    &sl FUNC
+                                   &mo MEDIA      &lt NAV SPACE  SMART_MOUSE         SMART_NUM      &smart_shft    &sl FUNC
 //                               ╰──────────────┴──────────────┴──────────────╯    ╰──────────────┴──────────────┴──────────────╯
 , ROT_DEF 
 )
@@ -104,7 +112,7 @@ ZMK_LAYER_3(nav,
 // ╰──────────────┴──────────────┴──────────────┼──────────────┼──────────────┤    ├──────────────┴──────────────┴──────────────┼──────────────┼──────────────╯
                                    ___            ___            ___                 ___            ___            ___ 
 //                               ╰──────────────┴──────────────┴──────────────╯    ╰──────────────┴──────────────┴──────────────╯
-, ROT_SCRL
+, ROT_NAV
 )
 ZMK_LAYER_3(num,
 // ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮    ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮
@@ -114,7 +122,7 @@ ZMK_LAYER_3(num,
 // ╰──────────────┴──────────────┴──────────────┼──────────────┼──────────────┤    ├──────────────┴──────────────┴──────────────┼──────────────┼──────────────╯
                                    ___            ___            &kp LS(MINUS)        &mo DEF        ___           CANCEL 
 //                               ╰──────────────┴──────────────┴──────────────╯    ╰──────────────┴──────────────┴──────────────╯
-, ROT_SCRL
+, ROT_NAV
 )
 ZMK_LAYER_3(func,
 // ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮    ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮
@@ -124,7 +132,7 @@ ZMK_LAYER_3(func,
 // ╰──────────────┴──────────────┴──────────────┼──────────────┼──────────────┤    ├──────────────┴──────────────┴──────────────┼──────────────┼──────────────╯
                                    ___            ___            ___                 ___             ___            ___
 //                               ╰──────────────┴──────────────┴──────────────╯    ╰──────────────┴──────────────┴──────────────╯
-, ROT_DEF
+, ROT_MEDIA
 )
 ZMK_LAYER_3(mouse,
 // ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮    ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮
