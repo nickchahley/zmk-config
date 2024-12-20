@@ -4,7 +4,28 @@
 # TODO: mkdir artifacts if dne
 # TODO: move settings reset to be its own shield
 # TODO: steal stuff from urob's script
+
+print_usage() {
+  printf "Usage: [-p pristine] <shield name>"
+}
+
+p_flag=''
+while getopts 'p' flag; do
+  case "${flag}" in
+    p) p_flag='true' ;;
+    *) print_usage
+       exit 1 ;;
+  esac
+done
+
+if [[ ($# == 0 ) || ( $@ == "--help" ) || ( $@ == "-h" ) ]]
+then
+	echo "Usage: $0 <shield>"
+	echo "Build firmware for shield using 'config/<shield>.conf'"
+	exit 1
+fi
 shield="$1"
+
 
 build_base="/home/nikoli/personal/keyboard/zmk-firmware/zmk-config/build/${shield}"
 zmk_config="/home/nikoli/personal/keyboard/zmk-firmware/zmk-config/config"
@@ -13,19 +34,6 @@ board="nice_nano_v2"
 [[ -z $HOST_CONFIG_DIR ]] && HOST_CONFIG_DIR=""
 [[ -z $ZMK_APP ]] && ZMK_APP="/home/nikoli/personal/keyboard/zmk-firmware/zmk/app"
 
-p_flag=''
-
-print_usage() {
-  printf "Usage: ..."
-}
-
-while getopts 'p' flag; do
-  case "${flag}" in
-    p) p_flag='true' ;;
-    *) print_usage
-       exit 1 ;;
-  esac
-done
 
 build_zmk () {
 	if [ "$p_flag" = true ]; then

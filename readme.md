@@ -23,7 +23,8 @@ ZMK_HEAD=$(pwd)
 git submodule init
 
 # install west into a venv
-conda activate qmk
+conda create --yes python pip -n zmk
+conda activate zmk
 pip install --user -U west
 west --version # verify installed
 
@@ -34,7 +35,7 @@ wget -O - https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.3
 cd zephyr-sdk-0.16.3
 ./setup.sh
 
-# back to wherever zmk repos are
+# back to wherever zmk repos are (ex. '../')
 cd "$ZMK_HEAD"
 
 # setup zmk src, urob's fork contains PRs we use, like mouse
