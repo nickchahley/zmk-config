@@ -123,6 +123,22 @@ ZMK_BEHAVIOR(y_x, tap_dance,
 	bindings = <&kp LC(C)>, <&kp LC(X)>;
 )
 
+// Need after layer defs?
+ZMK_BEHAVIOR(inner_ret_num, tap_dance,
+    tapping-term-ms = <300>;
+    bindings = <&sl NUM>, <&kp RET>;  // tap | double-tab 
+)
+// for different mods+ret combos (ex. vscode, rstudio)
+// ZMK_BEHAVIOUR(ret_dance, tap_dance,
+//     tapping-term-ms = <250>;
+//     bindings = <&kp LC(LS(RET))>, <&kp RET>; 
+// )
+// ZMK_BEHAVIOUR(tmux_ret_dance, tap_dance,
+//     tapping-term-ms = <250>;
+// 	// tap, 2tap, 3tap, ...
+//     bindings = <&kp LC(LS(RET))>, <&kp RET>; 
+// )
+
 // For rotary encoders
 / {
 	behaviors {

@@ -78,7 +78,7 @@ ZMK_LAYER(def,
     X_LM    &hml LGUI A    &hml LCTL R    &hml LALT S    &hml LSHIFT T  &kp G               &kp M          &hmr RSHIFT N  &hmr RALT E    &hmr LCTL I    &hmr RGUI O     X_RM
     X_LB    &kp Z          &kp X          &kp C          &kp D          &kp V               &kp K          &kp H          &comma_morph   &dot_morph     &kp FSLH        X_RB
 //╰──────╯╰──────────────┴──────────────┴──────────────┼──────────────┼──────────────┤    ├──────────────┴──────────────┴──────────────┼──────────────┼──────────────╯╰──────╯
-                                          &lt MEDIA DEL  &lt_spc NAV 0  SMART_MOUSE         SMART_NUM      &smart_shft    &lt FUNC BSPC 
+                                          &lt MEDIA DEL  &lt NAV SPACE  SMART_MOUSE         SMART_NUM      &smart_shft    &lt FUNC BSPC 
 //                                      ╰──────────────┴──────────────┴──────────────╯    ╰──────────────┴──────────────┴──────────────╯
 )
 ZMK_LAYER(nav,
@@ -96,7 +96,7 @@ ZMK_LAYER(num,
     X_LM    &hml LGUI N0   &hml LCTL N4   &hml LALT N5   &hml LSHIFT N6 &kp MINUS            ___            &kp RSHIFT    &kp RALT       &kp RCTL       &kp RGUI        X_RM  
     X_LB    &kp GRAVE      &kp N1         &kp N2         &kp N3         &kp BSLH             ___            ___           ___            ___            ___             X_RB  
 //├──────┤╰──────────────┴──────────────┴──────────────┼──────────────┼──────────────┤    ├──────────────┴──────────────┴──────────────┼──────────────┼──────────────╯├──────┤
-                                          ___            ___            &kp LS(MINUS)        ___            ___           CANCEL                                          
+                                          ___            ___            &kp LS(MINUS)        &mo DEF        ___           CANCEL                                          
 //╰──────╯                              ╰──────────────┴──────────────┴──────────────╯    ╰──────────────┴──────────────┴──────────────╯                              ╰──────╯
 )
 ZMK_LAYER(func,
