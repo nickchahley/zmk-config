@@ -72,6 +72,17 @@ MAKE_HRM(hml_repeat, &kp, &key_repeat, KEYS_R THUMBS) // for HRM combo
 #define PASTE     &kp LC(LS(V))
 #define PRNT_MODE &kp LA(LS(S)) // bound in swayLm
 
+/* Rotary encoders
+ * When two: nav/scrolling as defaults is fun
+ * When one: probably just do media, or l/r scrolling (?)
+ * scorlling is tricky since N triggers to see a scroll chage != same for
+ * media/nav
+*/
+#define ROT_NAV    &inc_dec_kp LEFT RIGHT &inc_dec_kp UP DOWN 
+#define ROT_SCRL   &scroll_right_left &scroll_up_down 
+#define ROT_MEDIA  &inc_dec_kp C_VOL_DN C_VOL_UP &inc_dec_kp C_BRI_DN C_BRI_UP
+#define ROT_DEF ROT_MEDIA
+
 ZMK_LAYER(def,
 //╭──────╮╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮    ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮╭──────╮
     X_LT    &kp Q          &kp W          &kp F          &kp P          &kp B               &kp J          &kp L          &kp U          &kp Y          &kp SQT         X_RT
@@ -90,14 +101,15 @@ ZMK_LAYER(nav,
                                           ___            ___            ___                 ___            ___            ___                                             
 //╰──────╯                              ╰──────────────┴──────────────┴──────────────╯    ╰──────────────┴──────────────┴──────────────╯                              ╰──────╯
 )
-ZMK_LAYER(num,
+ZMK_LAYER_3(num,
 //╭──────╮╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮    ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮╭──────╮
-    X_LT    &kp PLUS       &kp N7         &kp N8         &kp N9         &kp EQUAL            ___            ___           ___            ___            ___             X_RT  
-    X_LM    &hml LGUI N0   &hml LCTL N4   &hml LALT N5   &hml LSHIFT N6 &kp MINUS            ___            &kp RSHIFT    &kp RALT       &kp RCTL       &kp RGUI        X_RM  
-    X_LB    &kp GRAVE      &kp N1         &kp N2         &kp N3         &kp BSLH             ___            ___           ___            ___            ___             X_RB  
+    X_LT    &kp PLUS        &kp KP_N7       &kp KP_N8       &kp KP_N9         &kp EQUAL     ___            ___           ___            ___            ___              X_RT  
+    X_LM    &hml LGUI KP_N0 &hml LCTL KP_N4 &hml LALT KP_N5 &hml LSHIFT KP_N6 &kp MINUS     ___            &kp RSHIFT    &kp RALT       &kp RCTL       &kp RGUI         X_RM  
+    X_LB    &kp GRAVE       &kp KP_N1       &kp KP_N2       &kp KP_N3         &kp BSLH      ___            ___           ___            ___            ___              X_RB  
 //├──────┤╰──────────────┴──────────────┴──────────────┼──────────────┼──────────────┤    ├──────────────┴──────────────┴──────────────┼──────────────┼──────────────╯├──────┤
                                           ___            ___            &kp LS(MINUS)        &mo DEF        ___           CANCEL                                          
 //╰──────╯                              ╰──────────────┴──────────────┴──────────────╯    ╰──────────────┴──────────────┴──────────────╯                              ╰──────╯
+, ROT_NAV
 )
 ZMK_LAYER(func,
 //╭──────╮╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮    ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮╭──────╮
