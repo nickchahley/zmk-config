@@ -30,8 +30,6 @@
 #define FUNC    3
 #define MOUSE   4
 #define MEDIA   5
-#define QUD     6
-#define NOTDEF  7
 
 /* Global settings */
 
@@ -118,9 +116,9 @@ ZMK_LAYER_3(nav,
 )
 ZMK_LAYER_3(num,
 // ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮    ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮
-     &kp PLUS        &kp KP_N7       &kp KP_N8       &kp KP_N9         &kp EQUAL     ___            ___           ___            ___            ___
-     &hml LGUI KP_N0 &hml LCTL KP_N4 &hml LALT KP_N5 &hml LSHIFT KP_N6 &kp MINUS     ___            &kp RSHIFT    &kp RALT       &kp RCTL       &kp RGUI
-     &kp GRAVE       &kp KP_N1       &kp KP_N2       &kp KP_N3         &kp BSLH      ___            ___           ___            ___            ___
+     &kp PLUS        &kp N7       &kp N8       &kp N9         &kp EQUAL     ___            ___           ___            ___            ___
+     &hml LGUI N0 &hml LCTL N4 &hml LALT N5 &hml LSHIFT N6 &kp MINUS     ___            &kp RSHIFT    &kp RALT       &kp RCTL       &kp RGUI
+     &kp GRAVE       &kp N1       &kp N2       &kp N3         &kp BSLH      ___            ___           ___            ___            ___
 // ╰──────────────┴──────────────┴──────────────┼──────────────┼──────────────┤    ├──────────────┴──────────────┴──────────────┼──────────────┼──────────────╯
                                    ___            ___            &kp LS(MINUS)        &mo DEF        ___           CANCEL 
 //                               ╰──────────────┴──────────────┴──────────────╯    ╰──────────────┴──────────────┴──────────────╯
@@ -158,34 +156,4 @@ ZMK_LAYER_3(media,
 )
 
 
-ZMK_COMBO(layer_qud, &tog QUD, RT1 RT2 RT3 RT4, DEF QUD, COMBO_TERM_FAST, COMBO_IDLE_FAST)
-// replicate these for additional layers
-ZMK_COMBO(bspc,   &bs_del,   RT1 RT2, DEF NAV NUM QUD NOTDEF, COMBO_TERM_FAST, COMBO_IDLE_FAST)
-ZMK_COMBO(del,    &kp DEL,   RT2 RT3, DEF NAV NUM QUD NOTDEF, COMBO_TERM_FAST, COMBO_IDLE_FAST)
-ZMK_COMBO(esc,    HRC_ESC,   LM3 LM2, DEF NAV NUM QUD NOTDEF, COMBO_TERM_FAST, COMBO_IDLE_FAST)
-ZMK_COMBO(ret,    &kp RET,   LM2 LM1, DEF NAV NUM QUD NOTDEF, COMBO_TERM_FAST, COMBO_IDLE_FAST)
-
-// 2024-12-20 first making for caves of qud
-ZMK_LAYER_3(qud,
-// ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮    ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮
-    &kp PLUS        &kp KP_N7       &kp KP_N8       &kp KP_N9         &kp EQUAL     ___            ___           ___            ___            ___
-    &hml LGUI KP_N0 &hml LCTL KP_N4 &hml LALT KP_N5 &hml LSHIFT KP_N6 &kp MINUS     ___            ___           ___            ___            ___
-    &kp GRAVE       &kp KP_N1       &kp KP_N2       &kp KP_N3         &kp BSLH      ___            ___           ___            ___            ___
-// ╰──────────────┴──────────────┴──────────────┼──────────────┼──────────────┤    ├──────────────┴──────────────┴──────────────┼──────────────┼──────────────╯
-                                   &kp KP_NLCK      &kp SPACE      &kp TAB          SMART_NUM     &mo NOTDEF       &smart_shft 
-//                               ╰──────────────┴──────────────┴──────────────╯    ╰──────────────┴──────────────┴──────────────╯
-, &inc_dec_kp UP DOWN &inc_dec_kp UP DOWN
-)
-
-// testing to see if &mo def doesn't work
-ZMK_LAYER_3(notdef,
-// ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮    ╭──────────────┬──────────────┬──────────────┬──────────────┬──────────────╮
-     &kp Q          &kp W          &kp F          &kp P          &kp B               &kp J          &kp L          &kp U          &kp Y          &kp SQT
-     &hml LGUI A    &hml LCTL R    &hml LALT S    &hml LSHIFT T  &kp G               &kp M          &hmr RSHIFT N  &hmr RALT E    &hmr LCTL I    &hmr RGUI O
-     &kp Z          &kp X          &kp C          &kp D          &kp V               &kp K          &kp H          &comma_morph   &dot_morph     &kp FSLH
-// ╰──────────────┴──────────────┴──────────────┼──────────────┼──────────────┤    ├──────────────┴──────────────┴──────────────┼──────────────┼──────────────╯
-                                   &mo MEDIA      &lt NAV SPACE  SMART_MOUSE         SMART_NUM      &smart_shft    &sl FUNC
-//                               ╰──────────────┴──────────────┴──────────────╯    ╰──────────────┴──────────────┴──────────────╯
-, &inc_dec_kp LEFT RIGHT &inc_dec_kp LEFT RIGHT
-)
 // vim: nowrap: ft=c: fdm=indent: expandtab:
